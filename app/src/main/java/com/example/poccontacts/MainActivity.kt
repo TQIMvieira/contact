@@ -22,11 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         var list = arrayListOf<Contact>()
 
-        val cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null)!!
+        val cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " COLLATE NOCASE ASC")!!
         if (cur.count > 0) {
             while (cur.moveToNext()) {
                 val id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID))
-                val name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                val name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY))
                 if (cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)).toInt() > 0) {
                     val pCur = contentResolver.query(Phone.CONTENT_URI, null, Phone.CONTACT_ID + " = ?", arrayOf(id), null)!!
                     while (pCur.moveToNext()) {
