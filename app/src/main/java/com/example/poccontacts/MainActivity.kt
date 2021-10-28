@@ -21,12 +21,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        contactAdapter = ContactAdapter()
 
         rvContact = findViewById(R.id.rv_contact)
+        contactAdapter = ContactAdapter()
         rvContact.adapter = contactAdapter
-        rvContact.layoutManager = LinearLayoutManager(this)
-        rvContact.isNestedScrollingEnabled = false
+        rvContact.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         ActivityCompat.requestPermissions(
             this,
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         ) {
             val config = PagedList.Config.Builder()
                 .setPageSize(30)
-                .setPrefetchDistance(60)
                 .setEnablePlaceholders(false)
                 .build()
             contactsList = LivePagedListBuilder(ContactsDataSourceFactory(application), config).build()
